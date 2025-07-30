@@ -2,8 +2,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();  // <-- Add this to register controllers
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactDev",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+builder.Services.AddControllers();  // Register controllers
 
 var app = builder.Build();
 
@@ -15,9 +26,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();  // <-- recommended if you add authorization later
+// Enable CORS before authorization
+app.UseCors("AllowReactDev");
 
-app.MapControllers();  // <-- Add this to map your NotesController routes
+app.UseAuthorization();
+
+app.MapControllers();  // Map your API controllers
 
 var summaries = new[]
 {

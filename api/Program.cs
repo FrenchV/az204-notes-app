@@ -6,17 +6,15 @@ builder.Services.AddOpenApi();
 // CORS policy allowing localhost for dev and your Azure frontend for production
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
+    options.AddPolicy("AllowReactFrontend",
         policy =>
         {
-            policy.WithOrigins(
-                "http://localhost:3000", // React dev server
-                "https://your-frontend.azurestaticapps.net" // Replace with your actual frontend URL
-            )
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+            policy.WithOrigins("https://proud-sea-016b5f80f.2.azurestaticapps.net")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
+
 
 builder.Services.AddControllers();
 

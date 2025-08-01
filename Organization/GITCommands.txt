@@ -1,0 +1,34 @@
+# --- 2. Check current branch and status ---
+git status
+git branch
+
+# --- 3. Pull latest changes from GitHub (always do this before pushing) ---
+git pull origin main
+# OR if you're on another branch:
+git pull origin your-branch-name
+
+# --- 4. Stage all changes for commit ---
+git add .
+
+# --- 5. Commit your changes with a message ---
+git commit -m "Your message here"
+
+# --- 6. Push your changes to GitHub ---
+git push origin main
+# OR if you're working on a feature branch:
+git push origin your-branch-name
+
+# --- 7. Clone a repo (first time on a new computer) ---
+git clone https://github.com/YourUsername/your-repo-name.git
+
+# --- 8. Switch to a different branch ---
+git checkout branch-name
+
+# --- 9. Create a new branch and switch to it ---
+git checkout -b new-branch-name
+
+# --- 10. Merge a branch into main (after finishing a feature) ---
+git checkout main
+git pull origin main          # update local main
+git merge your-branch-name
+git push origin main

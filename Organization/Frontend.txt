@@ -1,0 +1,11 @@
+-- General Info --
+Port: 5291
+Type: http
+API: http://localhost:5291/api/notes
+
+-- Commands --
+npm start
+
+-- Notes --
+Day 2: Unsecure connect using http, need to transfer to https in the future
+

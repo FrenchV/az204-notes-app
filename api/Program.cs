@@ -15,7 +15,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -29,7 +28,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Use the CORS policy before authorization and controllers
-app.UseCors("AllowFrontend");
+app.UseCors("AllowReactFrontend");
 
 app.UseAuthorization();
 

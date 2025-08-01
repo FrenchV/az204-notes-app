@@ -5,13 +5,13 @@ API: http://localhost:5291/api/notes
 
 -- Commands --
 GET:
-curl http://localhost:5291/api/notes
+curl http://saadbackend-fbcbemd8bbbfb6c0.canadacentral-01.azurewebsites.net/api/notes
 
 POST:
-curl -X POST http://localhost:5291/api/notes -H "Content-Type: application/json" -d "{\"content\":\"This is a new note\"}"
+curl -X POST http://saadbackend-fbcbemd8bbbfb6c0.canadacentral-01.azurewebsites.net/api/notes -H "Content-Type: application/json" -d "{\"content\":\"This is a new note\"}"
 
 DELETE:
-curl -X DELETE http://localhost:5291/api/notes/1
+curl -X DELETE http://saadbackend-fbcbemd8bbbfb6c0.canadacentral-01.azurewebsites.net/api/notes/1
 
 -- Notes --
 Day 2: Unsecure connect using http, need to transfer to https in the future

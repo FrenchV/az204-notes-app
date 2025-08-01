@@ -14,6 +14,8 @@ namespace api.Controllers
             new Note { Id = 1, Content = "Welcome to your notes API!" }
         };
 
+        private static int nextId = notes.Count + 1;
+
         [HttpGet]
         public ActionResult<IEnumerable<Note>> Get()
         {
@@ -23,9 +25,9 @@ namespace api.Controllers
         [HttpPost]
         public ActionResult<Note> Post([FromBody] Note note)
         {
-            note.Id = notes.Count + 1;
+            note.Id = nextId++;
             notes.Add(note);
-            return Ok(note);
+            return CreatedAtAction(nameof(Get), new { id = note.Id }, note);
         }
 
         [HttpDelete("{id}")]
@@ -38,7 +40,7 @@ namespace api.Controllers
             }
 
             notes.Remove(note);
-            return Ok();
+            return NoContent();
         }
     }
 }

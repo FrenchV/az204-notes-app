@@ -3,18 +3,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddOpenApi();
 
+// CORS policy allowing localhost for dev and your Azure frontend for production
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactDev",
+    options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.WithOrigins(
+                "http://localhost:3000", // React dev server
+                "https://your-frontend.azurestaticapps.net" // Replace with your actual frontend URL
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
 
-builder.Services.AddControllers();  // Register controllers
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -26,36 +30,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Enable CORS before authorization
-app.UseCors("AllowReactDev");
+// Use the CORS policy before authorization and controllers
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 
-app.MapControllers();  // Map your API controllers
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

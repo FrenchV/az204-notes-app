@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import api from "./api";
 
+console.log("API base URL:", process.env.REACT_APP_API_BASE_URL);
+
+
 function App() {
   const [notes, setNotes] = useState([]);
   const [content, setContent] = useState("");
